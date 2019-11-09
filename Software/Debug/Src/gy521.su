@@ -1,0 +1,12 @@
+gy521.c:15:6:gy521_Init	16	static,ignoring_inline_asm
+gy521.c:40:9:getGyro_X	32	static
+gy521.c:51:9:getGyro_Y	32	static
+gy521.c:61:9:getGyro_Z	32	static
+gy521.c:71:9:getAcc_X	32	static
+gy521.c:82:9:getAcc_Y	32	static
+gy521.c:92:9:getAcc_Z	32	static
+gy521.c:104:7:getAccelPitch	48	static
+gy521.c:115:7:getGyroPitch	32	static
+gy521.c:122:7:getGyroYRate	24	static
+gy521.c:129:8:complementaryFilter	32	static
+gy521.c:138:10:checkTendency	24	static
