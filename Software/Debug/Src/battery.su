@@ -1,4 +1,5 @@
 battery.c:22:6:getBatteryVoltage	40	static
-battery.c:36:5:caclulateBatteryLevel	24	static
+battery.c:36:5:calulateBatteryLevel	24	static
 battery.c:47:6:displayBatteryLevel	32	static
-battery.c:75:5:checkForOverDischarge	32	static
+battery.c:75:5:checkForOverdischarge	32	static
+battery.c:86:5:measureBatteryLevel	24	static

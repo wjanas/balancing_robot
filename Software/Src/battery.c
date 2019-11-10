@@ -17,7 +17,7 @@ float voltage_levels[21] = {
 };
 
 
-/* public */
+/* public: */
 
 void getBatteryVoltage(Voltage *vol){
 	float measured_value[3];
@@ -33,7 +33,7 @@ void getBatteryVoltage(Voltage *vol){
 
 }
 
-int caclulateBatteryLevel(float voltage){
+int calulateBatteryLevel(float voltage){
 	int battery_level = 0;
 	for(int i = 0; i < 21; i++){
 		if(voltage <= voltage_levels[i] && voltage > voltage_levels[i + 1] ){
@@ -72,7 +72,7 @@ void displayBatteryLevel(int percentage){
 
 }
 
-int checkForOverDischarge(Voltage *vol){
+int checkForOverdischarge(Voltage *vol){
 	if(fmax(fmax(vol->FirstPacketVoltage, vol->SecondPacketVoltage), vol->ThirdPacketVoltage) -
 			fmin(fmin(vol->FirstPacketVoltage, vol->SecondPacketVoltage), vol->ThirdPacketVoltage) >= 0.2 ){
 		return 1;
@@ -81,5 +81,18 @@ int checkForOverDischarge(Voltage *vol){
 	} else{
 		return 0;
 	}
+}
+
+int measureBatteryLevel(Voltage *vol){
+	int result;
+	getBatteryVoltage(vol);
+	displayBatteryLevel(calulateBatteryLevel(vol->BatteryVoltage));
+
+	if(result = checkForOverdischarge(vol)){
+			htim3.Instance->CCR2 = 0;
+			htim3.Instance->CCR3 = 0;
+			htim3.Instance->CCR4 = 200;
+	}
+	return result;
 }
 

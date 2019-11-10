@@ -13,8 +13,9 @@ typedef struct{
 }Voltage;
 
 void getBatteryVoltage(Voltage *vol);
-int caclulateBatteryLevel(float voltage);
+int calulateBatteryLevel(float voltage);
 void displayBatteryLevel(int percentage);
-int checkForOverDischarge(Voltage *vol);
+int checkForOverdischarge(Voltage *vol);
+int measureBatteryLevel(Voltage *vol);
 
 #endif
