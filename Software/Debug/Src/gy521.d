@@ -17,6 +17,8 @@ Src/gy521.o: ../Src/gy521.c ../Inc/gy521.h ../Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h \
@@ -24,8 +26,7 @@ Src/gy521.o: ../Src/gy521.c ../Inc/gy521.h ../Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h ../Inc/gy521.h \
- ../Inc/motion_control.h ../Inc/PID.h ../Inc/Kalman.h ../Inc/battery.h \
- ../Inc/Kalman.h
+ ../Inc/motion_control.h ../Inc/PID.h ../Inc/Kalman.h ../Inc/battery.h
 
 ../Inc/gy521.h:
 
@@ -67,6 +68,10 @@ Src/gy521.o: ../Src/gy521.c ../Inc/gy521.h ../Inc/main.h \
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h:
 
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h:
+
+../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h:
+
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
@@ -90,5 +95,3 @@ Src/gy521.o: ../Src/gy521.c ../Inc/gy521.h ../Inc/main.h \
 ../Inc/Kalman.h:
 
 ../Inc/battery.h:
-
-../Inc/Kalman.h:

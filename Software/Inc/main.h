@@ -33,12 +33,16 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdbool.h"
+#include "stdlib.h"
+#include "math.h"
+#include "stm32f1xx.h"
 #include "gy521.h"
 #include "motion_control.h"
 #include "PID.h"
 #include "Kalman.h"
 #include "battery.h"
-#include "stm32f1xx.h"
+
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -66,6 +70,12 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define ADC_S1_Pin GPIO_PIN_1
+#define ADC_S1_GPIO_Port GPIOA
+#define ADC_S2_Pin GPIO_PIN_2
+#define ADC_S2_GPIO_Port GPIOA
+#define ADC_S3_Pin GPIO_PIN_3
+#define ADC_S3_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 #define LED GPIO_PIN_8
 

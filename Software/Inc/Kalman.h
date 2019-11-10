@@ -8,10 +8,7 @@
 #ifndef KALMAN_H_
 #define KALMAN_H_
 
-#include "gy521.h"
-#include "math.h"
-#include "stm32f1xx_hal.h"
-
+#include "main.h"
 
 /*Variables */
 

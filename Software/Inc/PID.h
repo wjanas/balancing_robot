@@ -7,9 +7,7 @@
 
 #ifndef PID_H_
 #define PID_H_
-#include "stm32f1xx_hal.h"
-#include "motion_control.h"
-#include "gy521.h"
+
 #include "main.h"
 
 /* Variables */

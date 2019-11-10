@@ -5,10 +5,6 @@
  *      Author: user
  */
 #include "gy521.h"
-#include "limits.h"
-#include "math.h"
-#include "stm32f1xx_hal.h"
-#include "Kalman.h"
  I2C_HandleTypeDef hi2c1;
 
 
@@ -16,23 +12,12 @@ void gy521_Init(){
 	  uint8_t d[2];
 	  d[0] = 0x6B;
 	  d[1] = 0x00;
-	  //while(HAL_I2C_Master_Transmit(&hi2c1, ADDR, (uint8_t*)d,2,100) != HAL_OK){}
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
-	  int i = 0;
-	  for(i; i<1000000; i++){
-		  asm("NOP");
-	  }
+	  while(HAL_I2C_Master_Transmit(&hi2c1, ADDR, (uint8_t*)d,2,100) != HAL_OK){}
+	  HAL_Delay(200);
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_RESET);
-	  i = 0;
-	  for(i; i<1000000; i++){
-		  asm("NOP");
-	  }
+	  HAL_Delay(200);
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_SET);
-	  i = 0;
-	  for(i; i<1000000; i++){
-		  asm("NOP");
-	  }
-	  i = 0;
+	  HAL_Delay(200);
 	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_8, GPIO_PIN_RESET);
 
 }

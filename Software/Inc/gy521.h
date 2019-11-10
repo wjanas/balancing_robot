@@ -10,8 +10,6 @@
 
 
 #include "main.h"
-#include "stm32f1xx_hal.h"
-#include "stdbool.h"
 
 #define ADDR 0x68<<1
 #define ACCEL_XOUT_H 0x3B
