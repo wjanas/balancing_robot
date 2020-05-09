@@ -37,16 +37,16 @@ extern "C" {
 #include "math.h"
 #include "stm32f1xx.h"
 #include "gy521.h"
-#include "motion_control.h"
 #include "PID.h"
 #include "Kalman.h"
 #include "battery.h"
-
+#include "motor_control.h"
 
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+
 
 /* USER CODE END ET */
 
@@ -76,6 +76,10 @@ void Error_Handler(void);
 #define ADC_S2_GPIO_Port GPIOA
 #define ADC_S3_Pin GPIO_PIN_3
 #define ADC_S3_GPIO_Port GPIOA
+#define PWM_A_Pin GPIO_PIN_13
+#define PWM_A_GPIO_Port GPIOB
+#define PWM_B_Pin GPIO_PIN_4
+#define PWM_B_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 #define LED GPIO_PIN_8
 

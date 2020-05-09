@@ -1,0 +1,4 @@
+motor_control.c:10:6:setMotorSpeed	16	static
+motor_control.c:21:6:generateMotorsPWM	24	static
+motor_control.c:36:6:moveRobot	16	static
+motor_control.c:53:6:shortBreakMotors	8	static

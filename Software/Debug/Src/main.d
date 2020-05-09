@@ -26,8 +26,8 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h ../Inc/gy521.h \
- ../Inc/main.h ../Inc/motion_control.h ../Inc/PID.h ../Inc/Kalman.h \
- ../Inc/battery.h
+ ../Inc/main.h ../Inc/PID.h ../Inc/Kalman.h ../Inc/battery.h \
+ ../Inc/motor_control.h
 
 ../Inc/main.h:
 
@@ -89,10 +89,10 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
 
 ../Inc/main.h:
 
-../Inc/motion_control.h:
-
 ../Inc/PID.h:
 
 ../Inc/Kalman.h:
 
 ../Inc/battery.h:
+
+../Inc/motor_control.h:

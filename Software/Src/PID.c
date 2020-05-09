@@ -5,9 +5,7 @@
  *      Author: user
  */
 #include "PID.h"
-#include "stm32f1xx_hal.h"
 #include "main.h"
-#include "math.h"
 
 void PID_Init(){
 	speedIntegral = 0;
@@ -25,7 +23,6 @@ void anglePID(float refAngle, int8_t realAngle){
 	float Kd = 0;
 	double v = 0;
 	float dt = ((1 + TIM2->PSC)*(1+TIM2->ARR))/24000000;
-
 	/*
 	if(realAngle >= (refAngle - 3) && realAngle <= (refAngle + 3)){
 		realAngle = refAngle;
@@ -34,20 +31,6 @@ void anglePID(float refAngle, int8_t realAngle){
 	error = refAngle - realAngle;
 	angleIntegral = angleIntegral  + error * dt;
 	v = Kp*(error + (Kd* (error - previousError) / dt) + Ki * angleIntegral);// * 1.33;
-
-	if(v < 0){
-		_dir = BACKWARD;
-		 _speed = -(int)(v);
-	}
-	else{
-		_dir = FORWARD;
-		_speed = (int)(v);
-	}
-
-	/*if(_speed != previousSpeed){
-		changeSpeed(_speed);
-	}*/
-
 	previousError = error;
 }
 

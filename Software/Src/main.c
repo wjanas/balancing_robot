@@ -67,6 +67,13 @@ int16_t currentAngle = 0;
 int16_t angleSum = 0;
 
 Voltage battery;
+
+char received;
+
+motor_t left_motor = {LEFT_SIDE, 50};
+motor_t right_motor = {RIGHT_SIDE, 50};
+uint8_t pwm_cnt;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -85,37 +92,32 @@ static void MX_TIM15_Init(void);
 /* Private function prototypes -----------------------------------------------*/
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if(htim->Instance == TIM2){
-		moveRobot(150,_dir);
+		pwm_cnt++;
+		generateMotorsPWM(&left_motor, &right_motor, pwm_cnt);
+		if(pwm_cnt >= 100)
+			pwm_cnt = 0;
 	}
 	if(htim->Instance == TIM4){
 		anglePID(0,theta);
-	}
-	if(htim->Instance == TIM6){
-		//frequency = 100Hz
-		//_v = getSpeed();
-		//_steps = 0;
 	}
 	if(htim->Instance == TIM7){
 		//frequency = 1kHz
 		gyroAngle = getGyroPitch(gyroAngle, rawGyro);
 		accAngle = rawAccel;
-		cnt++;
-		if(cnt <= 40){
-
-			currentAngle = currentAngle + complementaryFilter(gyroAngle, accAngle);
-
-		}
-		else{
-			test = currentAngle /40;
-			theta = getKalmanAngle(test,getGyroYRate(rawGyro), 0.04);
-			currentAngle = 0;
-			cnt = 0;
-		}
+		theta = getKalmanAngle(theta, getGyroYRate(rawGyro), 0.04);
 	}
 	if(htim->Instance == TIM15){
 		measureBatteryLevel(&battery);
 	}
 }
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+	if(received == 't'){
+		HAL_GPIO_TogglePin(GPIOB, LED);
+	}
+	  HAL_UART_Receive_IT(&huart1, &received, sizeof(received));
+}
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -130,6 +132,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	pwm_cnt = 0;
 
   /* USER CODE END 1 */
   
@@ -163,7 +166,6 @@ int main(void)
   MX_TIM15_Init();
   /* USER CODE BEGIN 2 */
   PID_Init();
-  motorsInit();
   gy521_Init();
   gyroAngle = getAccelPitch();
   accAngle = gyroAngle;
@@ -182,12 +184,30 @@ int main(void)
 
   HAL_ADC_Start(&hadc1);
 
+  HAL_UART_Receive_IT(&huart1, &received, sizeof(received));
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1){
 
+	  moveRobot(FORWARD);
+	  setMotorSpeed(&left_motor, 0);
+	  HAL_Delay(1000);
+	  setMotorSpeed(&left_motor, 25);
+	  HAL_Delay(1000);
+	  setMotorSpeed(&left_motor, 50);
+	  HAL_Delay(1000);
+	  setMotorSpeed(&left_motor, 75);
+	  HAL_Delay(1000);
+	  setMotorSpeed(&left_motor, 100);
+	  HAL_Delay(1000);
+	  setMotorSpeed(&left_motor, 75);
+	  HAL_Delay(1000);
+	  setMotorSpeed(&left_motor, 50);
+	  HAL_Delay(1000);
+	  setMotorSpeed(&left_motor, 25);
+	  HAL_Delay(1000);
 	  //rawGyro = getGyro_Y();
 	  //rawAccel = getAccelPitch();
 
@@ -340,9 +360,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 239;
+  htim2.Init.Prescaler = 23;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 999;
+  htim2.Init.Period = 99;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -607,7 +627,7 @@ static void MX_USART1_UART_Init(void)
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
   huart1.Init.BaudRate = 115200;
-  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.WordLength = UART_WORDLENGTH_9B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
   huart1.Init.Mode = UART_MODE_TX_RX;
@@ -638,16 +658,16 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15 
-                          |GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_8, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12|PWM_A_Pin|GPIO_PIN_14|GPIO_PIN_15 
+                          |GPIO_PIN_3|PWM_B_Pin|GPIO_PIN_8, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PB12 PB13 PB14 PB15 
-                           PB3 PB4 PB5 PB8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15 
-                          |GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_8;
+  /*Configure GPIO pins : PB12 PWM_A_Pin PB14 PB15 
+                           PB3 PWM_B_Pin PB8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_12|PWM_A_Pin|GPIO_PIN_14|GPIO_PIN_15 
+                          |GPIO_PIN_3|PWM_B_Pin|GPIO_PIN_8;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

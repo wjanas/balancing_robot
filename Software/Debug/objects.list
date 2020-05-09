@@ -20,7 +20,7 @@
 "Src/battery.o"
 "Src/gy521.o"
 "Src/main.o"
-"Src/motion_control.o"
+"Src/motor_control.o"
 "Src/stm32f1xx_hal_msp.o"
 "Src/stm32f1xx_it.o"
 "Src/syscalls.o"
